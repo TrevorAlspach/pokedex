@@ -9,34 +9,34 @@ import {
   NavigationMenuTrigger,
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
-
+import { listGenerations } from '@/_services/pokeApiService';
+import { NamedAPIResourceList } from 'pokenode-ts';
 
 interface NavMenuProps {}
 
-const NavMenu: FC<NavMenuProps> = () => (
+
+
+const NavMenu = async (props: NavMenuProps) => {
+  const generations = await listGenerations();
+
+
+  return (
   <NavigationMenu>
   <NavigationMenuList>
     <NavigationMenuItem>
-      <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
+      <NavigationMenuTrigger>Generations</NavigationMenuTrigger>
       <NavigationMenuContent>
-        <NavigationMenuLink>Link</NavigationMenuLink>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
-    <NavigationMenuItem>
-      <NavigationMenuTrigger>Item Two</NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <NavigationMenuLink>Link2</NavigationMenuLink>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
-    <NavigationMenuItem>
-      <NavigationMenuTrigger>Item Three</NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <NavigationMenuLink>Link3</NavigationMenuLink>
+      {generations.map((gen, index) => (
+              <NavigationMenuLink key={gen.name} href={`/generation/${index + 1}`}>
+                {gen.name.replace("-", " ")}
+              </NavigationMenuLink>
+            ))}
       </NavigationMenuContent>
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>
 
-);
+)
+};
 
 export default NavMenu;

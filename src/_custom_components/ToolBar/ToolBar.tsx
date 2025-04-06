@@ -16,7 +16,7 @@ const ToolBar: FC<ToolBarProps> = () => (
         </Link>
 
         {/* Center: Search */}
-        <Search/>
+        {/* <Search/> */}
 
         {/* Right: Actions */}
         {/* <div className="flex items-center gap-2">

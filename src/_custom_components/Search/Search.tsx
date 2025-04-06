@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+'use client'
+import React, { FC, useState } from 'react';
 import {
   Command,
   CommandDialog,
@@ -14,25 +15,46 @@ import {
 
 interface SearchProps {}
 
-const Search: FC<SearchProps> = () => (
-  <Command className="max-w-xs">
-  <CommandInput placeholder="Find a Pokemon..."  />
-  {/* <CommandList>
-    <CommandEmpty>No results found.</CommandEmpty>
-    <CommandGroup heading="Suggestions">
-      <CommandItem>Calendar</CommandItem>
-      <CommandItem>Search Emoji</CommandItem>
-      <CommandItem>Calculator</CommandItem>
-    </CommandGroup>
-    <CommandSeparator />
-    <CommandGroup heading="Settings">
-      <CommandItem>Profile</CommandItem>
-      <CommandItem>Billing</CommandItem>
-      <CommandItem>Settings</CommandItem>
-    </CommandGroup>
-  </CommandList> */}
-</Command>
+//const Search: FC<SearchProps> = () => {}
+const Search = (props: SearchProps) => {
+  const allPokemons = [
+    'Bulbasaur', 'Ivysaur', 'Venusaur', 'Charmander', 'Charmeleon', 'Charizard',
+    'Squirtle', 'Wartortle', 'Blastoise', 'Pikachu', 'Raichu', 'Sandshrew',
+    // Add more Pokémon names here
+  ];
 
-);
+  const handleQueryChange = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredPokemons = allPokemons.filter((pokemon) =>
+    pokemon.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return(
+  <div className="flex justify-center items-center">
+      <Command className="rounded-lg border shadow-md md:min-w-[450px]">
+        <CommandInput
+          placeholder="Search Pokémon"
+          value={searchQuery}
+          onValueChange={handleQueryChange}        
+        />
+        <CommandList>
+        
+        {searchQuery.length > 0 && filteredPokemons.length > 0 ? (
+            <CommandGroup>
+               {filteredPokemons.map((pokemon, index) => (
+              <CommandItem key={index}>{pokemon}</CommandItem>
+            ))}
+            </CommandGroup>
+        ) : (<></>)}
+
+        </CommandList>
+      </Command>
+    </div>
+  )
+};
 
 export default Search;

@@ -15,9 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="flex flex-col h-screen">
         <ToolBar />
-        <main className="container mx-auto py-4 a">{children}</main>
+        <main className="flex flex-1 container mx-auto py-4">{children}</main>
       </body>
     </html>
   );
