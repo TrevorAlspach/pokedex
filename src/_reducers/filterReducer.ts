@@ -1,7 +1,7 @@
 interface FilterState {
   searchTerm: string;
   typeFilter: string[];
-  generationFilter: string;
+  generationFilter: number;
 }
 
 interface FilterAction {
@@ -12,7 +12,7 @@ interface FilterAction {
 export const initialState: FilterState = {
   searchTerm: "",
   typeFilter: [],
-  generationFilter: "generation i",
+  generationFilter: 1,
 };
 
 const filterReducer = (

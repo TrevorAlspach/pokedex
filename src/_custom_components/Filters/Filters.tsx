@@ -1,5 +1,6 @@
 'use client'
 
+import { useFilter } from "@/_context/FilterContext";
 import Dropdown from "@/_custom_components/DropDown/Dropdown";
 import Search from "@/_custom_components/Search/Search";
 import filterReducer, {initialState} from "@/_reducers/filterReducer";
@@ -11,11 +12,13 @@ interface FiltersProps {
 }
 
 const Filters = ({generationsPromise}: FiltersProps) => {
-    const [filters, dispatch] = useReducer(filterReducer, initialState);
+    //const [filters, dispatch] = useReducer(filterReducer, initialState);
+    const { state, dispatch } = useFilter();
+    
     const generations = use(generationsPromise);
     console.log(generations)
 
-    const generationNames = generations.map((gen) => gen.name + ` (${gen.main_region.name})`);
+    const generationNames = generations.map((gen) => gen.names.find((genName)=>genName.language.name==='en' ? true : false)?.name + ` (${gen.main_region.name})`);
 
     function handleGenerationChange(generation: string) {
         console.log("Selected generation:", generation);

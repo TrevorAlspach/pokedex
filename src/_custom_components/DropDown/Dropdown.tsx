@@ -36,9 +36,8 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onSelect }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
       {options.map((option, index) => (
-        <>
             <DropdownMenuItem key={index} onClick={()=>{handleSelection(option)}}>{option}</DropdownMenuItem>
-            </>
+ 
       ))}
         
         </DropdownMenuContent>

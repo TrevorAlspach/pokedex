@@ -35,7 +35,7 @@ const Search = ({className}: SearchProps) => {
   <div className="flex justify-center items-center">
       <Command className={`rounded-lg border shadow-md ${className}`}>
         <CommandInput
-          placeholder="Search Pokémon"
+          placeholder="Search By Name"
           value={searchQuery}
           onValueChange={handleQueryChange}        
         />

@@ -1,6 +1,7 @@
 import {
   Generation,
   NamedAPIResourceList,
+  Pokedex,
   Pokemon,
   PokemonClient,
 } from "pokenode-ts"; // Import the Client
@@ -29,15 +30,40 @@ export async function listGenerations() {
       })
     );
 
-    /*     const generations = response.results.map(
-      (gen) => ({
-        id: gen.name,
-        url: gen.url,
-        name: gen.name,
-      })
-    ); */
-
     return generationDetails; // Return the modified generations
+  } catch (error) {
+    console.error("Failed to fetch generations", error);
+    return [];
+  }
+}
+
+export async function listPokedexes() {
+  try {
+    const response = await gameClient.listPokedexes();
+    console.log(response);
+
+    const pokedexDetails = await Promise.all(
+      response.results.map(async (pokedex) => {
+        const pokedexDetail: Pokedex = await gameClient.getPokedexByName(
+          pokedex.name
+        );
+        return pokedexDetail;
+      })
+    );
+
+    return pokedexDetails; // Return the modified generations
+  } catch (error) {
+    console.error("Failed to fetch generations", error);
+    return [];
+  }
+}
+
+export async function getNationalDex() {
+  try {
+    const response = await gameClient.getPokedexById(1);
+    console.log(response);
+
+    return response; // Return the modified generations
   } catch (error) {
     console.error("Failed to fetch generations", error);
     return [];
