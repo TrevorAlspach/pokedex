@@ -1,19 +1,19 @@
-import Search from "@/_custom_components/Search/Search";
+/* 'use client' */
+
+
+import Filters from "@/_custom_components/Filters/Filters";
+import { listGenerations } from "@/_services/pokeApiService";
 
 export default function Home() {
+  const generations = listGenerations();
+  
   return (
-    <div className="flex flex-1 flex-col items-center justify-center
-    ">
+    <div className="h-[33vh] flex flex-1 flex-col justify-center w-full">
     {/* Welcome Message */}
-    <h1 className="text-4xl font-bold mb-4">Welcome to the Pokédex!</h1>
-    
-    {/* Search Bar */}
-    {/* <input
-      type="text"
-      placeholder="Search Pokémon"
-      className="p-2 border rounded-md w-64"
-    /> */}
-    <Search/>
+    <h1 className="text-3xl md:text-3xl lg:text-3xl font-bold mb-4 self-center">PokeFinder</h1>
+    <Filters generationsPromise={generations}/>
+
+  
   </div>
   );
 }

@@ -1,5 +1,10 @@
-import { NamedAPIResourceList, Pokemon, PokemonClient } from 'pokenode-ts'; // Import the Client
-import { GameClient } from 'pokenode-ts';
+import {
+  Generation,
+  NamedAPIResourceList,
+  Pokemon,
+  PokemonClient,
+} from "pokenode-ts"; // Import the Client
+import { GameClient } from "pokenode-ts";
 const pokemonApi = new PokemonClient();
 const gameClient = new GameClient();
 
@@ -12,19 +17,29 @@ export function getPokemonByName(name: string): Promise<Pokemon> {
 // }
 
 export async function listGenerations() {
-    try {
-        const response = await gameClient.listGenerations();
-        console.log(response)
+  try {
+    const response = await gameClient.listGenerations();
+    console.log(response);
 
+    const generationDetails = await Promise.all(
+      response.results.map(async (gen) => {
+        const generationDetail: Generation =
+          await gameClient.getGenerationByName(gen.name);
+        return generationDetail;
+      })
+    );
 
-        const generations = response.results.map((gen) => ({
-            name: gen.name.replace("-", " "), // Replace "-" with " " in the name
-            url: gen.url,
-        }));
+    /*     const generations = response.results.map(
+      (gen) => ({
+        id: gen.name,
+        url: gen.url,
+        name: gen.name,
+      })
+    ); */
 
-        return generations; // Return the modified generations
-    } catch (error) {
-      console.error("Failed to fetch generations", error);
-      return [] ;
-    }
+    return generationDetails; // Return the modified generations
+  } catch (error) {
+    console.error("Failed to fetch generations", error);
+    return [];
   }
+}

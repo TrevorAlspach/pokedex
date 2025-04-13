@@ -11,17 +11,14 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command"
+import Dropdown from "@/_custom_components/DropDown/Dropdown";
 
 
-interface SearchProps {}
+interface SearchProps {
+  className?: string;
+}
 
-//const Search: FC<SearchProps> = () => {}
-const Search = (props: SearchProps) => {
-  const allPokemons = [
-    'Bulbasaur', 'Ivysaur', 'Venusaur', 'Charmander', 'Charmeleon', 'Charizard',
-    'Squirtle', 'Wartortle', 'Blastoise', 'Pikachu', 'Raichu', 'Sandshrew',
-    // Add more Pokémon names here
-  ];
+const Search = ({className}: SearchProps) => {
 
   const handleQueryChange = (query: string) => {
     setSearchQuery(query);
@@ -29,31 +26,22 @@ const Search = (props: SearchProps) => {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredPokemons = allPokemons.filter((pokemon) =>
+  /* const filteredPokemons = allPokemons.filter((pokemon) =>
     pokemon.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  ); */
 
   return(
+    <>
   <div className="flex justify-center items-center">
-      <Command className="rounded-lg border shadow-md md:min-w-[450px]">
+      <Command className={`rounded-lg border shadow-md ${className}`}>
         <CommandInput
           placeholder="Search Pokémon"
           value={searchQuery}
           onValueChange={handleQueryChange}        
         />
-        <CommandList>
-        
-        {searchQuery.length > 0 && filteredPokemons.length > 0 ? (
-            <CommandGroup>
-               {filteredPokemons.map((pokemon, index) => (
-              <CommandItem key={index}>{pokemon}</CommandItem>
-            ))}
-            </CommandGroup>
-        ) : (<></>)}
-
-        </CommandList>
       </Command>
     </div>
+    </>
   )
 };
 
